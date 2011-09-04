@@ -1,0 +1,6 @@
+h2. Data Structures Refresher
+
+It's been a long time since I've needed to implement a linked list, binary
+tree, or any other data structure for myself.  It's also been a long time since
+I wrote any C++ code.  As a result, I'm going through the important data
+structures I can think of and reimplementing them in C++.  
