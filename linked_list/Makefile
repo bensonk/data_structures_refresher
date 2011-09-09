@@ -1,10 +1,10 @@
-all: linked_list
+all: main
 
-test: linked_list
-	./linked_list
+test: main
+	./main
 
-linked_list: linked_list.cpp
-	g++ -g linked_list.cpp -o linked_list
+main: main.cpp
+	g++ -g main.cpp -o main
 
 clean:
-	rm -rf linked_list
+	rm -rf main
