@@ -17,6 +17,30 @@ class ListNode {
 };
 
 template <class T>
+class LinkedListIterator {
+  private:
+    ListNode<T>* current;
+  public:
+    LinkedListIterator(ListNode<T>* n) {
+      current = n;
+    }
+
+    void next() {
+      current = current->next;
+    }
+
+    T get() {
+      return current->value;
+    }
+
+    bool end() {
+      if(current == NULL)
+        return true;
+      return false;
+    }
+};
+
+template <class T>
 class LinkedList {
   private:
     ListNode<T>* head;
@@ -37,17 +61,15 @@ class LinkedList {
       }
     }
 
-    T get(int index) {
-      ListNode<T>* n = head;
-      for(; index; index--) {
-        n = n->next;
-        if(!n) return NULL;
-      }
-      return n->value;
+    LinkedListIterator<T>* begin() {
+      return new LinkedListIterator<T>(head);
     }
 
-    friend class ListIterator;
+    LinkedListIterator<T>* end() {
+      return new LinkedListIterator<T>(tail);
+    }
 };
+
 
 
 int main(int argc, char** argv) {
@@ -59,13 +81,23 @@ int main(int argc, char** argv) {
   l.add(9);
   l.add(2);
   l.add(5);
-  for(int i = 0; i < 7; i++)
-    cout << "l[" << i << "] = " << l.get(i) << endl;
+
+  LinkedListIterator<int>* l_iter = l.begin();
+  do {
+    cout << l_iter->get() << endl;
+    l_iter->next();
+  } while(!l_iter->end());
+  delete l_iter;
+
 
   LinkedList<string> s;
   s.add("foo");
   s.add("bar");
   s.add("baz");
-  for(int i = 0; i < 3; i++)
-    cout << "s[" << i << "] = " << s.get(i) << endl;
+
+  LinkedListIterator<string>* i = s.begin();
+  for(; !i->end(); i->next()) {
+    cout << i->get() << endl;
+  }
+  delete i;
 }
