@@ -1,53 +1,57 @@
 #include <iostream>
+#include <string>
+
 using namespace std;
 
-
+template <class T>
 class ListNode {
   public:
-    int value;
+    T value;
     ListNode* next;
 
   public:
-    ListNode(int value) {
+    ListNode(T value) {
       this->value = value;
     }
-    ListNode() {
-    }
+    ListNode() { }
 };
 
+template <class T>
 class LinkedList {
   private:
-    ListNode* head;
-    ListNode* tail;
+    ListNode<T>* head;
+    ListNode<T>* tail;
   public:
     LinkedList() {
       head = NULL;
       tail = NULL;
     }
 
-    void add(int val) {
+    void add(T val) {
       if(!head) {
-        head = tail = new ListNode(val);
+        head = tail = new ListNode<T>(val);
       }
       else {
-        tail->next = new ListNode(val);
+        tail->next = new ListNode<T>(val);
         tail = tail->next;
       }
     }
 
-    int get(int index) {
-      ListNode* n = head;
+    T get(int index) {
+      ListNode<T>* n = head;
       for(; index; index--) {
         n = n->next;
-        if(!n) return -1;
+        if(!n) return NULL;
       }
       return n->value;
     }
+
+    friend class ListIterator;
 };
 
 
 int main(int argc, char** argv) {
-  LinkedList l;
+  LinkedList<int> l;
   l.add(1);
   l.add(8);
   l.add(4);
@@ -57,4 +61,11 @@ int main(int argc, char** argv) {
   l.add(5);
   for(int i = 0; i < 7; i++)
     cout << "l[" << i << "] = " << l.get(i) << endl;
+
+  LinkedList<string> s;
+  s.add("foo");
+  s.add("bar");
+  s.add("baz");
+  for(int i = 0; i < 3; i++)
+    cout << "s[" << i << "] = " << s.get(i) << endl;
 }
